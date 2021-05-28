@@ -1,12 +1,15 @@
 const express = require("express");
-var bodyParser = require("body-parser") 
-const app = express(express.json);
+const app = express();
+app.use(express.json());
 
-app.listen(3000);
-app.use(bodyParser.json())
+const auth = require('./routes/auth');
+
+app.use('/', auth.router);
 
 app.get('/', (req, res) => {
     console.log("hello");
 })
 
 module.exports = app;
+
+app.listen(3000); 
