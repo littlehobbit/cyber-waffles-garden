@@ -55,6 +55,11 @@
                     app:cornerRadius="0dp"
                     app:elevation="0dp" />
 
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
                 <Button
                     android:id="@+id/reg_tab"
                     android:layout_width="0dp"
