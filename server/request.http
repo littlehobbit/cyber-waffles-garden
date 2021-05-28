@@ -1,4 +1,4 @@
-POST http://localhost:3000/registration 
+POST http://localhost:3000/registratiron 
 content-type: application/json
 
 {
@@ -8,18 +8,11 @@ content-type: application/json
     "surname": "Kutovoy",
     "phone": "+79286187502"
 }
-
 ###
-
 GET http://localhost:3000 
-
-
 ###
+GET http://localhost:3000/getpasswordhash
+###
+GET http://localhost:3000/getevents
 
-POST  http://192.168.43.124:3000/login
-Content-Type: application/json
 
-{
-    "email": "nkutovoy@sfedu.ru",
-    "password": "ElizabethNN"
-}

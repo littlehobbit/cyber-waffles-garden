@@ -1,8 +1,9 @@
 const express = require("express");
-const app = express();
-app.use(express.json());
+var bodyParser = require("body-parser") 
+const app = express(express.json);
 
-app.listen(3000); 
+app.listen(3000);
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
     console.log("hello");
