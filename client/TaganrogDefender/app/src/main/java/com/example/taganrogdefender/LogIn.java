@@ -2,6 +2,7 @@ package com.example.taganrogdefender;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -9,12 +10,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+
+
 public class LogIn extends AppCompatActivity {
+
+    request_unreal request = new request_unreal();
 
     Button btn_log,
             btn_reg,
             tab_log,
             tab_reg;
+
     EditText firstname_line,
             secondname_line,
             phone_line,
@@ -29,8 +35,6 @@ public class LogIn extends AppCompatActivity {
 
     Boolean is_login = true;
     Boolean is_registration = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class LogIn extends AppCompatActivity {
         password_block = findViewById(R.id.password_block);
         email_block = findViewById(R.id.email_block);
 
+        set_login();
+
         tab_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,12 +79,18 @@ public class LogIn extends AppCompatActivity {
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                request.POST(null);
+                Intent intent = new Intent(LogIn.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                request.POST(null);
+                Intent intent = new Intent(LogIn.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -118,5 +130,20 @@ public class LogIn extends AppCompatActivity {
         email_block.setVisibility(View.VISIBLE);
     }
 
+    void success_login() {
+
+    }
+
+    void success_registration() {
+
+    }
+
+    void unsuccess_login() {
+
+    }
+
+    void unsuccess_registration() {
+
+    }
 
 }

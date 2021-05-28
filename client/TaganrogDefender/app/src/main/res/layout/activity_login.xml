@@ -122,6 +122,8 @@
                             android:ems="10"
                             android:hint="Имя"
                             android:inputType="textPersonName"
+                            android:textColor="#717171"
+                            android:textColorHint="#717171"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -153,6 +155,8 @@
                             android:ems="10"
                             android:hint="Фамилия"
                             android:inputType="textPersonName"
+                            android:textColor="#717171"
+                            android:textColorHint="#717171"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -184,6 +188,8 @@
                             android:ems="10"
                             android:hint="Email"
                             android:inputType="textPersonName"
+                            android:textColor="#717171"
+                            android:textColorHint="#717171"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -215,6 +221,8 @@
                             android:ems="10"
                             android:hint="Телефон"
                             android:inputType="textPersonName"
+                            android:textColor="#717171"
+                            android:textColorHint="#717171"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -245,6 +253,8 @@
                             android:ems="10"
                             android:hint="Пароль"
                             android:inputType="textPersonName"
+                            android:textColor="#717171"
+                            android:textColorHint="#717171"
                             android:textSize="15sp" />
                     </LinearLayout>
 
