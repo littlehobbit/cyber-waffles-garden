@@ -1,12 +1,14 @@
-const app = require("./server.js");
-const {v4} = require('uuid')
+const express = require('express');
+const router = express.Router();
+
+//const {v4} = require('uuid')
 const mysql = require("mysql2");
-const { response } = require("./server.js");
+//const { response } = require("./server.js");
 
 
 
 // GET PASSWORD
-app.get('/getpasswordhash', (req, res)=>{
+router.get('/getpasswordhash', (req, res)=>{
     const connection = mysql.createConnection({
         host: "192.168.43.143",
         user: "waffles",
@@ -46,7 +48,7 @@ app.get('/getpasswordhash', (req, res)=>{
 })
 
 // GET EVENTS
-app.get('/getevents', (req, res)=>{
+router.get('/getevents', (req, res)=>{
     const connection = mysql.createConnection({
         host: "192.168.43.143",
         user: "waffles",
@@ -85,11 +87,50 @@ app.get('/getevents', (req, res)=>{
     })
 })
 
+// GET PASSPORT
+router.get('/getpassports', (req, res)=>{
+    const connection = mysql.createConnection({
+        host: "192.168.43.143",
+        user: "waffles",
+        database: "deftagan",
+        password: "waffle",
+        port: "3306"
+      });
+    connection.connect(function(err){
+        if (err) {
+          res.status(500).send();
+        }
+        else{
+          console.log("Подключение к серверу MySQL успешно установлено");
+        }
+     });
+    //let query="SELECT * FROM users";
+    let query="SELECT * FROM passports";
+    
+    connection.query(query, (err, result, field) => {
+        console.log(err);
+        console.log(result);
+        //console.log(result[0]['PASSWORDHASH']);
+        // console.log(field)
+        /*setTimeout(() => {
+            res.status(200).json(result)
+        }, 1000)*/
+    })
+    connection.end(err => {
+        if(err) {
+            console.log(err);
+            return err;
+        }
+        else {
+            //console.log();
+        }
+    })
+})
 
 
 
 
-
+module.exports.router = router;
 
 /*let GETALLMARKSS = [
     {

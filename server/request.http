@@ -14,5 +14,7 @@ GET http://localhost:3000
 GET http://localhost:3000/getpasswordhash
 ###
 GET http://localhost:3000/getevents
+###
+GET http://localhost:3000/getpassports
 
 
