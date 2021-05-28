@@ -32,9 +32,12 @@ router.get('/getpasswordhash', (req, res)=>{
         console.log(result);
         //console.log(result[0]['PASSWORDHASH']);
         // console.log(field)
-        /*setTimeout(() => {
-            res.status(200).json(result)
-        }, 1000)*/
+        if(err) res.sendStatus(500)
+        else{
+            setTimeout(() => {
+                res.status(200).json(result)
+            }, 1000)
+        }
     })
     connection.end(err => {
         if(err) {
@@ -72,9 +75,12 @@ router.get('/getevents', (req, res)=>{
         console.log(result);
         //console.log(result[0]['PASSWORDHASH']);
         // console.log(field)
-        /*setTimeout(() => {
-            res.status(200).json(result)
-        }, 1000)*/
+        if(err) res.sendStatus(500)
+        else{
+            setTimeout(() => {
+                res.status(200).json(result)
+            }, 1000)
+        }
     })
     connection.end(err => {
         if(err) {
@@ -105,16 +111,19 @@ router.get('/getpassports', (req, res)=>{
         }
      });
     //let query="SELECT * FROM users";
-    let query="SELECT * FROM passports";
+    let query="SELECT * FROM pasports";
     
     connection.query(query, (err, result, field) => {
         console.log(err);
         console.log(result);
         //console.log(result[0]['PASSWORDHASH']);
         // console.log(field)
-        /*setTimeout(() => {
-            res.status(200).json(result)
-        }, 1000)*/
+        if(err) res.sendStatus(500)
+        else{
+            setTimeout(() => {
+                res.status(200).json(result)
+            }, 1000)
+        }
     })
     connection.end(err => {
         if(err) {
