@@ -1,0 +1,25 @@
+POST http://localhost:3000/registration 
+content-type: application/json
+
+{
+    "name":"Nikita",
+    "email": "nkutovoy@sfedu.ru",
+    "password": "ElizabethNN",
+    "surname": "Kutovoy",
+    "phone": "+79286187502"
+}
+
+###
+
+GET http://localhost:3000 
+
+
+###
+
+POST  http://192.168.43.124:3000/login
+Content-Type: application/json
+
+{
+    "email": "nkutovoy@sfedu.ru",
+    "password": "ElizabethNN"
+}
