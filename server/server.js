@@ -7,3 +7,5 @@ app.listen(3000);
 app.get('/', (req, res) => {
     console.log("hello");
 })
+
+module.exports = app;
