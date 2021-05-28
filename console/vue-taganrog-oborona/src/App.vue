@@ -4,7 +4,9 @@
      import { useGeolocation } from './useGeolocation'
      import { Loader } from '@googlemaps/js-api-loader'
      const GOOGLE_MAPS_API_KEY = 'AIzaSyAO68ev8VYxzNdOfYPbZsJyQQZJYlG2Ab0'
-
+     const Marker = {lat:0, lng: 0}
+     let mmarkers = []
+     let Map = 0
      export default {
           name: 'App',
           setup() {
@@ -22,49 +24,67 @@
 
                onMounted(async () => {
                     await loader.load()
-                    map.value = new google.maps.Map(mapDiv.value, {
+                    map = new google.maps.Map(document.getElementById("map"), {
                          center: currPos.value,
                          zoom: 11,
                     })
-                    clickListener = map.value.addListener(
+                    clickListener = map.addListener(
                             'click',
                             ({ latLng: { lat, lng } }) =>
-                                    (otherPos.value = { lat: lat(), lng: lng() })
+                                    (otherPos.value = { lat: lat(), lng: lng() },
+                                    Marker.lat = otherPos.value.lat,
+                                            Marker.lng = otherPos.value.lng,
+                                            Map = map
+                                    )
                     )
                })
                onUnmounted(async () => {
                     if (clickListener) clickListener.remove()
                })
 
-              let marker;
-              watch([map, otherPos], () => {
-                  if (marker) marker.setMap(null)
-                  if (map.value && otherPos.value != null)
-                      marker = new google.maps.Marker(
-                          {position:{lat:otherPos.value.lat,lng:otherPos.value.lng}, map:map.value}
-                      );
-              })
-
                return { currPos, otherPos, mapDiv }
           },
 
          data(){
               return {
-                  markers: []
+
               }
 
          },
          methods: {
              drawMarkers(){
-                 this.markers = [{
-                     position: Marker
-                 }]
 
-                 if (marker) marker.setMap(null)
-                 if (map.value && otherPos.value != null)
+                 console.log(this.markers)
+
+                 let marker
+                 if (Marker.lat !== null && Marker.lng !== null)
                      marker = new google.maps.Marker(
-                         {position:Marker, map:map.value}
+                         {
+                             position: Marker,
+                             title: 'Hello man 123!'
+                         }
                      );
+                 marker.setMap(Map)
+                 mmarkers.push(marker)
+                 for (let i = 0; i < mmarkers.length; i++) {
+                     console.log(mmarkers[i].map)
+                 }
+
+             },
+
+             ClearMarkers(){
+
+                 for (let i = 0; i < mmarkers.length; i++) {
+                     mmarkers[i].setMap(null)
+                 }
+                 mmarkers = []
+             },
+
+             Clear_last(){
+                 if(mmarkers.length !== 0) {
+                     mmarkers[mmarkers.length - 1].setMap(null)
+                     mmarkers.pop()
+                 }
              }
          }
      }
@@ -73,6 +93,8 @@
 <template>
      <div class="d-flex text-center" style="height: 20vh">
          <button @click="drawMarkers">Draw Markers</button>
+         <button @click="ClearMarkers">Delete Markers</button>
+         <button @click="Clear_last">Clear last</button>
           <div class="m-auto">
                <h4>Your Position</h4>
                Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
@@ -87,5 +109,5 @@
                <span v-else>Click the map to select a position</span>
           </div>
      </div>
-     <div ref="mapDiv" style="width: 100%; height: 80vh" />
+     <div id="map" style="width: 100%; height: 80vh" />
 </template>
