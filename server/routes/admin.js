@@ -28,8 +28,7 @@ router.post('/admin/event', auth,  (req, res) => {
     console.log(query);
     connection.query(query, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-
-        res.status(201).send(JSON.stringify(result.insertId));
+        else res.status(201).send(JSON.stringify(result.insertId));
     })
 })
 
@@ -46,7 +45,7 @@ router.delete('/admin/event', auth,  (req, res) => {
     })
 })
 
-router.put('/admin/event/', auth, (req, res)=>{
+router.put('/admin/event', auth, (req, res)=>{
     if(!req.user.isAdmin) return res.sendStatus(401);
     var values = [];
     var query = "update event_places set "
@@ -63,11 +62,69 @@ router.put('/admin/event/', auth, (req, res)=>{
         values.push(req.body.address);
     }
     if(req.body.datetime !== undefined){
-        query+= "EVENT_ADDREEVENT_DATETIMESS=?, "
+        query+= "EVENT_DATETIMESS=?, "
         values.push(req.body.datetime);
     }
     if(req.body.place !== undefined){
         query+= `EVENT_PLACE= PointFromText('POINT(${req.body.place.x} ${req.body.place.y})'), `
+    }
+    query = query.slice(0, query.length - 2);
+    query += ` where ID = ${req.body.id}`;
+    console.log(query);
+    connection.query(query, values, (err, result)=>{
+        if(err){
+            console.log(err);
+            res.sendStatus(400);
+        }
+        else res.sendStatus(202);
+    })
+})
+
+router.post('/admin/bonus', auth,  (req, res) => {
+    if(!req.user.isAdmin) return res.sendStatus(401)
+    let query=`
+    INSERT INTO bonus_places 
+    (BONUS_NAME, BONUS_DESCRIPTION, BONUS_ADDRESS, BONUS_PLACE)
+    VALUES
+    ('${req.body.name}', '${req.body.description}', '${req.body.address}',  PointFromText('POINT(${req.body.place.x} ${req.body.place.y})'))`;
+    console.log(query);
+    connection.query(query, (err, result, field) => {
+        if (err) res.status(404).send('Database error');
+        else res.status(201).send(JSON.stringify(result.insertId));
+    })
+})
+
+router.delete('/admin/bonus', auth,  (req, res) => {
+    if(!req.user.isAdmin) return res.sendStatus(401);
+    var values = [req.body.id];
+    var query = "delete from bonus_places where id=?"
+    connection.query(query,values, (err, result)=>{
+        if(err){
+             res.sendStatus(500);
+            console.log(err);
+        }
+        else res.sendStatus(202);
+    })
+})
+
+router.put('/admin/bonus', auth, (req, res)=>{
+    if(!req.user.isAdmin) return res.sendStatus(401);
+    var values = [];
+    var query = "update bonus_places set "
+    if(req.body.name !== undefined){
+        query+= "BONUS_NAME=?, "
+        values.push(req.body.name);
+    }
+    if(req.body.description !== undefined){
+        query+= "BONUS_DESCRIPTION=?, "
+        values.push(req.body.description);
+    }
+    if(req.body.address !== undefined){
+        query+= "BONUS_ADDRESS=?, "
+        values.push(req.body.address);
+    }
+    if(req.body.place !== undefined){
+        query+= `BONUS_PLACE= PointFromText('POINT(${req.body.place.x} ${req.body.place.y})'), `
     }
     query = query.slice(0, query.length - 2);
     query += ` where ID = ${req.body.id}`;

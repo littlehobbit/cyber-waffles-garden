@@ -85,3 +85,19 @@ Content-Type: application/json
 {
     "id":2
 }
+
+###
+
+POST http://localhost:3000/admin/bonus/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmt1dG92b3lAc2ZlZHUucnUiLCJpZCI6MiwiaXNBZG1pbiI6MSwiaWF0IjoxNjIyMjY0NzQxLCJleHAiOjE2MjIyNjU2NDF9.gdIVoIQXZqCjPsnzuiaIyk2JBbwoPNkj1aNVTbnIH4E
+
+{
+    "name":"sad",
+    "description":"cry",
+    "address":"clolt",
+    "place":{
+        "x":"36.77",
+        "y":"35.11"
+    }
+}
