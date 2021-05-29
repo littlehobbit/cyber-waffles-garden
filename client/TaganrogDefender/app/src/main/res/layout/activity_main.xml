@@ -32,7 +32,11 @@
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -54,6 +58,10 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/tickets"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -107,7 +115,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="6"
                     app:cardBackgroundColor="#F48FB1"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -138,7 +150,11 @@
                     android:layout_height="100dp"
                     android:layout_weight="6"
                     app:cardBackgroundColor="#F48FB1"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -149,7 +165,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginLeft="20dp"
-                            android:text="История\nМероприятия"
+                            android:text="История\nФестиваля"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"

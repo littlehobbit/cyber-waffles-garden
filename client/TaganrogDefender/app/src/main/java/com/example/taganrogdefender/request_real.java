@@ -48,14 +48,9 @@ public class request_real implements request_interface {
                         e.printStackTrace();
 
                     }
-                    countDownLatch.countDown();
-                    return;
                 }
-                else
-                {
-                    countDownLatch.countDown();
-                    return;
-                }
+                countDownLatch.countDown();
+                return;
             }
         });
         try {
@@ -67,7 +62,40 @@ public class request_real implements request_interface {
     }
 
     @Override
-    public JSONObject GET() {
-        return null;
+    public JSONObject GET(String url) {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        final JSONObject[] resp = {null};
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                return;
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    JSONObject myResponse = null;
+                    try {
+                        resp[0] = new JSONObject(response.body().string());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                countDownLatch.countDown();
+                return;
+            }
+        });
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return resp[0];
     }
 }

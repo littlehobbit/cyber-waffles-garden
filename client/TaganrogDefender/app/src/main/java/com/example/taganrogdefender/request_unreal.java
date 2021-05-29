@@ -11,7 +11,7 @@ public class request_unreal implements request_interface {
     }
 
     @Override
-    public JSONObject GET() {
+    public JSONObject GET(String url) {
         return null;
     }
 }
