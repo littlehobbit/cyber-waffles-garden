@@ -18,8 +18,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class request_real implements request_interface {
+
+    static public String token_access;
+    static public String refresh_token_access;
+
     @Override
     public JSONObject POST(String url, String json) {
+
+
         OkHttpClient client = new OkHttpClient();
 
         RequestBody body = RequestBody.create(

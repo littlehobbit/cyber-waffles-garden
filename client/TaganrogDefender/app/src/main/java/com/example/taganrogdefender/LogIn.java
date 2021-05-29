@@ -92,27 +92,33 @@ public class LogIn extends AppCompatActivity {
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject jsonObject = new JSONObject();
-
-                try {
-                    jsonObject.put("email", email_line.getText().toString());
-                    jsonObject.put("password", password_line.getText().toString());
-                    jsonObject.put("name", firstname_line.getText().toString());
-                    jsonObject.put("surname", secondname_line.getText().toString());
-                    jsonObject.put("phone", phone_line.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                request.POST("http://"+ server_ip + "/registration", jsonObject.toString());
-/*                Intent intent = new Intent(LogIn.this, MainActivity.class);
-                startActivity(intent);*/
+                click_reg();
             }
         });
 
     }
 
 
+    void click_reg() {
+        JSONObject jsonObject = new JSONObject();
 
+        try {
+            jsonObject.put("email", email_line.getText().toString());
+            jsonObject.put("password", password_line.getText().toString());
+            jsonObject.put("name", firstname_line.getText().toString());
+            jsonObject.put("surname", secondname_line.getText().toString());
+            jsonObject.put("phone", phone_line.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(request.POST("http://"+ server_ip + "/registration", jsonObject.toString()) != null) {
+            set_login();
+            Toast.makeText(LogIn.this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(LogIn.this, "Регистрация не удалась", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     void click_login() {
         JSONObject jsonObject = new JSONObject();
@@ -123,8 +129,18 @@ public class LogIn extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (request.POST("http://"+ server_ip + "/login", jsonObject.toString()) != null)
+
+        JSONObject json = request.POST("http://"+ server_ip + "/login", jsonObject.toString());
+
+        if (json != null)
         {
+            try {
+                request_real.refresh_token_access = json.getString("refreshtoken");
+                request_real.token_access = json.getString("accesstoken");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "Авторизация прошла успешно", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LogIn.this, MainActivity.class);
             startActivity(intent);
         } else

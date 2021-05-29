@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -40,28 +43,70 @@ public class MainActivity extends AppCompatActivity {
     Boolean have_passport = true;
     GoogleMap map;
 
+    RecyclerView recyclerView;
+
     Handler handler;
-    Runnable r;
+    Runnable run_update_map;
+    Runnable run_refresh;
+
+    private PassportAdapter _adapter;
+    private RecyclerView.LayoutManager _layoutManager;
+
+    private Intent _fileIntent;
+    PassportArray passportArray = new PassportArray();
 
     request_real request = new request_real();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
+        recyclerView = findViewById(R.id.recyclerview_passports);
+
+
+        passportArray.loadArray(this);
+
+        buildRecyclerView();
+
+
         handler = new Handler();
-        r = new Runnable() {
+        run_update_map = new Runnable() {
             public void run() {
                 UpdateMap();
-                handler.postDelayed(this, 600000);
+                handler.postDelayed(run_update_map, 600000);
             }
         };
-        handler.postDelayed(r, 0);
-        UpdateMap();
+
+        run_refresh = new Runnable() {
+            public void run() {
+                Refresh();
+                handler.postDelayed(run_refresh, 600000);
+            }
+        };
+
+        handler.postDelayed(run_update_map, 0);
+        handler.postDelayed(run_refresh, 600000);
+    }
+
+    private void Refresh() {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("token", request_real.refresh_token_access);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject response = request.POST("http://"+ server_ip + "/refresh", jsonObject.toString());
+        try {
+            request_real.token_access = response.getString("accesstoken");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void UpdateMap() {
@@ -99,11 +144,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void buildRecyclerView()
+    {
+        recyclerView = findViewById(R.id.recyclerview_passports);
+        recyclerView.setHasFixedSize(true);
+        _layoutManager = new LinearLayoutManager(MainActivity.this);
+        _adapter = new PassportAdapter(passportArray.getPassports());
+
+        recyclerView.setLayoutManager(_layoutManager);
+        recyclerView.setAdapter(_adapter);
+
+        passportArray.add_new_passport("pu", "pu", true, true, PassportItem.type_of_participant.Reconstruction);
+        _adapter.notifyDataSetChanged();
+
+        _adapter.setOnItemClickListener(new PassportAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(MainActivity.this, "Вы нажали на билеты, молодец", Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
         try {
-            handler.removeCallbacks(r);
+            handler.removeCallbacks(run_update_map);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         try {
-            handler.postDelayed(r, 0);
+            handler.postDelayed(run_update_map, 0);
         } catch (Exception e) {
             e.printStackTrace();
         }

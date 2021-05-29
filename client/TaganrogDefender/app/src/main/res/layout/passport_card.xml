@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/book_card"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="30dp"
+    android:layout_marginRight="30dp"
+    app:cardBackgroundColor="#FFC107"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name_passport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/surname_passport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/VIP_passport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VIP" />
+
+        <TextView
+            android:id="@+id/type_passport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="type" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
