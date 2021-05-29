@@ -7,6 +7,13 @@
      const Marker = {lat:0, lng: 0}
      let mmarkers = []
      let Map = 0
+    let Information = [{
+        date:'',
+        time:'',
+        location:'',
+        nameOfEvent:''
+    }]
+
      export default {
           name: 'App',
           setup() {
@@ -38,6 +45,7 @@
                                     )
                     )
                })
+
                onUnmounted(async () => {
                     if (clickListener) clickListener.remove()
                })
@@ -47,29 +55,57 @@
 
          data(){
               return {
+                  Array:{date:'',
+                          time:'',
+                          location:'',
+                            nameOfEvent:''
+                  }
 
               }
 
          },
+
          methods: {
              drawMarkers(){
-
-                 console.log(this.markers)
 
                  let marker
                  if (Marker.lat !== null && Marker.lng !== null)
                      marker = new google.maps.Marker(
                          {
                              position: Marker,
-                             title: 'Hello man 123!'
+                             title: 'Hello man 123!',
+                             draggable: false
                          }
                      );
+
+                 const infowindow = new google.maps.InfoWindow({
+                     content: '<div id="content">' +
+                         '<div id="siteNotice">' +
+                         "</div>" +
+                         '<h1 id="firstHeading" class="firstHeading">'+Array.nameOfEvent+'</h1>' +
+                         '<div id="bodyContent">' +
+                         '<p>'+Array.location+'</p>' +
+                         '<p>'+Array.date + ',\n' + Array.time + '</p>' +
+                         "</div>" +
+                         "</div>"
+                 });
+
+                 marker.addListener("click", () => {
+                     infowindow.open(Map, marker);
+                 });
+                let Prikol = new Array({
+                    date:Array.date,
+                    time:Array.time,
+                    location:Array.location,
+                    nameOfEvent:Array.nameOfEvent
+                })
+                 Information.push(Prikol)
+                 for (let i = 0; i < Information.length; i++) {
+                     console.log(Information[i].date,Information[i].time,Information[i].location,Information[i].nameOfEvent)
+                 }
+                 console.log(Information)
                  marker.setMap(Map)
                  mmarkers.push(marker)
-                 for (let i = 0; i < mmarkers.length; i++) {
-                     console.log(mmarkers[i].map)
-                 }
-
              },
 
              ClearMarkers(){
@@ -77,6 +113,7 @@
                  for (let i = 0; i < mmarkers.length; i++) {
                      mmarkers[i].setMap(null)
                  }
+                 Information = []
                  mmarkers = []
              },
 
@@ -84,7 +121,15 @@
                  if(mmarkers.length !== 0) {
                      mmarkers[mmarkers.length - 1].setMap(null)
                      mmarkers.pop()
+                     Information.pop()
                  }
+             },
+
+             AddInfo(){
+                 console.log(Array.date)
+                 console.log(Array.time)
+                 console.log(Array.location)
+                 console.log(Array.nameOfEvent)
              }
          }
      }
@@ -95,19 +140,17 @@
          <button @click="drawMarkers">Draw Markers</button>
          <button @click="ClearMarkers">Delete Markers</button>
          <button @click="Clear_last">Clear last</button>
-          <div class="m-auto">
-               <h4>Your Position</h4>
-               Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
-               {{ currPos.lng.toFixed(2) }}
-          </div>
-          <div class="m-auto">
-               <h4>Clicked Position</h4>
-               <span v-if="otherPos">
-        Latitude: {{ otherPos.lat.toFixed(2) }}, Longitude:
-        {{ otherPos.lng.toFixed(2) }}
-      </span>
-               <span v-else>Click the map to select a position</span>
-          </div>
      </div>
-     <div id="map" style="width: 100%; height: 80vh" />
+
+    <div>
+        <input id="in1" type="text" v-model="Array.date" placeholder="Введите дату">
+        <input id="in2" type="text" v-model="Array.time" placeholder="Введите время">
+        <input id="in3"  type="text" v-model="Array.location" placeholder="Введите место проведение">
+        <input id="in4"  type="text" v-model="Array.nameOfEvent" placeholder="Введите событие">
+
+        <div>
+            <button @click="AddInfo">Add Injormation</button>
+        </div>
+    </div>
+     <div id="map" style="width: 70%; height: 80vh" />
 </template>
