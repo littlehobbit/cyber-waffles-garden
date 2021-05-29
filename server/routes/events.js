@@ -14,7 +14,7 @@ router.get('/events/near', (req, res) => {
         console.log(err);
         if (err) res.status(404).send('Database error');
 
-        res.status(200).send(result);
+        res.status(200).json({res : result}).send();
     })
 })
 
@@ -27,7 +27,7 @@ router.get('/events/all', (req, res) => {
         console.log(err);
         if (err) res.status(404).send('Database error');
 
-        res.status(200).send(result);
+        res.status(200).json({res : result}).send();
     })
 })
 
