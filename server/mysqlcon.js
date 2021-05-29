@@ -1,4 +1,4 @@
-const mysql = require("mysql2");
+const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
     host: "192.168.43.143",
