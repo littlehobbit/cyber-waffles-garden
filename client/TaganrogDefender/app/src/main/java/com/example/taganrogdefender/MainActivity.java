@@ -37,7 +37,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    String server_ip = "192.168.43.124:3000";
+    String server_ip = "192.168.43.143:3000";
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     Boolean have_passport = true;

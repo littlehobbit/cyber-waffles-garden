@@ -45,7 +45,10 @@ public class PassportAdapter extends RecyclerView.Adapter<PassportAdapter.ItemVi
             is_vip = itemView.findViewById(R.id.VIP_passport);
             is_participant = itemView.findViewById(R.id.type_passport);
 
-            itemView.findViewById(R.id.passport_card).setOnClickListener(v -> {
+            View item = itemView.findViewById(R.id.passport_card);
+            if (item == null) return;
+
+            item.setOnClickListener(v -> {
                 if(listener != null)
                 {
                     int position = getAdapterPosition();
