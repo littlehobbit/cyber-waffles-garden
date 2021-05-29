@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('./auth');
+const auth = require('./auth').authenticateUser;
 const connection = require('../mysqlcon');
 
 /* 	ID INT PRIMARY KEY AUTO_INCREMENT, 
@@ -17,7 +17,8 @@ const connection = require('../mysqlcon');
     datetime
     place {x: y:}
  */
-router.post('/admin/event', (req, res) => {
+router.post('/admin/event', auth,  (req, res) => {
+    if(!req.user.isAdmin) return res.sendStatus(401)
     let query=`
     INSERT INTO event_places 
     (EVENT_NAME, EVENT_DESCRIPTION, EVENT_ADDRESS, EVENT_DATETIME, EVENT_PLACE)
@@ -32,8 +33,52 @@ router.post('/admin/event', (req, res) => {
     })
 })
 
-router.delete('/admin/event', (req, res) => {
-    // TODO
+router.delete('/admin/event', auth,  (req, res) => {
+    if(!req.user.isAdmin) return res.sendStatus(401);
+    var values = [req.body.id];
+    var query = "delete from event_places where id=?"
+    connection.query(query,values, (err, result)=>{
+        if(err){
+             res.sendStatus(500);
+            console.log(err);
+        }
+        else res.sendStatus(202);
+    })
+})
+
+router.put('/admin/event/', auth, (req, res)=>{
+    if(!req.user.isAdmin) return res.sendStatus(401);
+    var values = [];
+    var query = "update event_places set "
+    if(req.body.name !== undefined){
+        query+= "EVENT_NAME=?, "
+        values.push(req.body.name);
+    }
+    if(req.body.description !== undefined){
+        query+= "EVENT_DESCRIPTION=?, "
+        values.push(req.body.description);
+    }
+    if(req.body.address !== undefined){
+        query+= "EVENT_ADDRESS=?, "
+        values.push(req.body.address);
+    }
+    if(req.body.datetime !== undefined){
+        query+= "EVENT_ADDREEVENT_DATETIMESS=?, "
+        values.push(req.body.datetime);
+    }
+    if(req.body.place !== undefined){
+        query+= `EVENT_PLACE= PointFromText('POINT(${req.body.place.x} ${req.body.place.y})'), `
+    }
+    query = query.slice(0, query.length - 2);
+    query += ` where ID = ${req.body.id}`;
+    console.log(query);
+    connection.query(query, values, (err, result)=>{
+        if(err){
+            console.log(err);
+            res.sendStatus(400);
+        }
+        else res.sendStatus(202);
+    })
 })
 
 module.exports = router;

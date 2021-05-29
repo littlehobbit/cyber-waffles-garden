@@ -15,12 +15,22 @@ GET http://localhost:3000
 
 ###
 
-POST http://localhost:3000/login 
+POST http://192.168.43.124:3000/login 
 content-type: application/json
 
 {
     "email": "nkutovoy@sfedu.ru",
     "password": "ElizabethNN"
+}
+
+###
+
+POST http://192.168.43.124:3000/login 
+content-type: application/json
+
+{
+    "email": "pupa@gmail.com",
+    "password": "pupazalupu"
 }
 
 ###
@@ -37,3 +47,41 @@ Content-Type: application/json
 GET http://localhost:3000/test 
 Content-Type: application/json
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmt1dG92b3lAc2ZlZHUucnUiLCJpZCI6MiwiaXNBZG1pbiI6MCwiaWF0IjoxNjIyMjQ2NjgxLCJleHAiOjE2MjIyNDc1ODF9.hF8MuvJN6HQJD9Jl3viMO3fiooaUGWRq0gjphSzSwmo
+
+###
+
+POST http://localhost:3000/admin/event/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmt1dG92b3lAc2ZlZHUucnUiLCJpZCI6MiwiaXNBZG1pbiI6MSwiaWF0IjoxNjIyMjUzOTY3LCJleHAiOjE2MjIyNTQ4Njd9.j4d19P1yw2aNMdCsy-5tK0cEYxFk1s-jm6FdHufSTlA
+
+{
+    "name":"cyber-waffles-hackathon",
+    "description":"yeah boy",
+    "address":"chill streat",
+    "datetime":"2021-05-28 21:00:00.000",
+    "place":{
+        "x":"1.1",
+        "y":"2.2"
+    }
+}
+
+###
+
+PUT http://localhost:3000/admin/event
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmt1dG92b3lAc2ZlZHUucnUiLCJpZCI6MiwiaXNBZG1pbiI6MSwiaWF0IjoxNjIyMjU3Mjg3LCJleHAiOjE2MjIyNTgxODd9.FYOhL4bNLfd1ryk947QRiaOOmhFWJeHc-grmEKc4NBo
+Content-Type: application/json
+
+{
+    "id":2,
+    "description":"cyber-waffles-hackathon"
+}
+
+###
+
+DELETE http://localhost:3000/admin/event
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmt1dG92b3lAc2ZlZHUucnUiLCJpZCI6MiwiaXNBZG1pbiI6MSwiaWF0IjoxNjIyMjU3Mjg3LCJleHAiOjE2MjIyNTgxODd9.FYOhL4bNLfd1ryk947QRiaOOmhFWJeHc-grmEKc4NBo
+Content-Type: application/json
+
+{
+    "id":2
+}

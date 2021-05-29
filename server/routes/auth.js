@@ -120,7 +120,6 @@ async function authenticateUser(req, res, next){
     else{
         await jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user)=>{
         if(err){
-                console.log(err);
                 return res.sendStatus(403);
             }
         else{
