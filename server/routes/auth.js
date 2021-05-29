@@ -98,7 +98,6 @@ router.post('/login', (req, res) => {
             catch (e){
                 res.status(500).send();
                 console.log(req.body);
-                console.log(user);
                 console.log(e);
             }
         }

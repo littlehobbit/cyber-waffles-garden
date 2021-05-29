@@ -232,3 +232,27 @@ authorization: Be eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicHVwYUBnbWFpb
     "isvip":"true",
     "iguest":"true",
 }
+
+###
+
+GET http://localhost:3000/bonuses/near
+Content-Type: application/json
+
+###
+
+GET http://localhost:3000/bonuses/all
+Content-Type: application/json
+
+###
+
+GET http://localhost:3000/bonuses/details/1
+
+###
+
+GET http://localhost:3000/events/details/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmt1dG92b3lAc2ZlZHUucnUiLCJpZCI6MiwiaXNBZG1pbiI6MSwiaWF0IjoxNjIyMjU3Mjg3LCJleHAiOjE2MjIyNTgxODd9.FYOhL4bNLfd1ryk947QRiaOOmhFWJeHc-grmEKc4NBo
+
+###
+
+GET http://localhost:3000/events/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmt1dG92b3lAc2ZlZHUucnUiLCJpZCI6MiwiaXNBZG1pbiI6MSwiaWF0IjoxNjIyMjU3Mjg3LCJleHAiOjE2MjIyNTgxODd9.FYOhL4bNLfd1ryk947QRiaOOmhFWJeHc-grmEKc4NBo
