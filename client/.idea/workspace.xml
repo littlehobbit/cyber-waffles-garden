@@ -6,7 +6,15 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f99f6fb-29b1-47b0-b3eb-89605504ce64" name="Default Changelist" comment="" />
+    <list default="true" id="6f99f6fb-29b1-47b0-b3eb-89605504ce64" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaganrogDefender/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/TaganrogDefender/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/LogIn.java" beforeDir="false" afterPath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/LogIn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/request_interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/request_interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/request_real.java" beforeDir="false" afterPath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/request_real.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/request_unreal.java" beforeDir="false" afterPath="$PROJECT_DIR$/TaganrogDefender/app/src/main/java/com/example/taganrogdefender/request_unreal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaganrogDefender/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TaganrogDefender/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,9 +51,7 @@
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="TaganrogDefender.app" />
@@ -100,9 +106,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
       <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
   </component>
   <component name="SvnConfiguration">
@@ -123,10 +127,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622204908264" />
-    <state x="1220" y="286" key="FileChooserDialogImpl" timestamp="1622205473614">
+    <state x="1220" y="286" key="FileChooserDialogImpl" timestamp="1622236421497">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1220" y="286" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1622205473614" />
+    <state x="1220" y="286" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1622236421497" />
     <state x="922" y="176" key="SettingsEditor" timestamp="1622205278135">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

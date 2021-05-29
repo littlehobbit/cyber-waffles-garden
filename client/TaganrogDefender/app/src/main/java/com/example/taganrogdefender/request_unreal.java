@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public class request_unreal implements request_interface {
     @Override
-    public JSONObject POST(JSONObject jsonObject) {
+    public JSONObject POST(String url, String json) {
         return null;
     }
 

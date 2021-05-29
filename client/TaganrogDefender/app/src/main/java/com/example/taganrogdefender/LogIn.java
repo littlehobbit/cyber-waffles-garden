@@ -9,12 +9,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class LogIn extends AppCompatActivity {
 
-    request_unreal request = new request_unreal();
+    String server_ip = "192.168.43.124:3000";
+
+    request_real request = new request_real();
 
     Button btn_log,
             btn_reg,
@@ -79,21 +84,53 @@ public class LogIn extends AppCompatActivity {
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request.POST(null);
-                Intent intent = new Intent(LogIn.this, MainActivity.class);
-                startActivity(intent);
+                click_login();
             }
         });
+
 
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request.POST(null);
-                Intent intent = new Intent(LogIn.this, MainActivity.class);
-                startActivity(intent);
+                JSONObject jsonObject = new JSONObject();
+
+                try {
+                    jsonObject.put("email", email_line.getText().toString());
+                    jsonObject.put("password", password_line.getText().toString());
+                    jsonObject.put("name", firstname_line.getText().toString());
+                    jsonObject.put("surname", secondname_line.getText().toString());
+                    jsonObject.put("phone", phone_line.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                request.POST("http://"+ server_ip + "/registration", jsonObject.toString());
+/*                Intent intent = new Intent(LogIn.this, MainActivity.class);
+                startActivity(intent);*/
             }
         });
 
+    }
+
+
+
+
+    void click_login() {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("email", email_line.getText().toString());
+            jsonObject.put("password", password_line.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (request.POST("http://"+ server_ip + "/login", jsonObject.toString()) != null)
+        {
+            Intent intent = new Intent(LogIn.this, MainActivity.class);
+            startActivity(intent);
+        } else
+        {
+            Toast.makeText(this, "Авторизация не удалась", Toast.LENGTH_SHORT).show();
+        }
     }
 
     void set_login() {
@@ -129,21 +166,4 @@ public class LogIn extends AppCompatActivity {
         password_block.setVisibility(View.VISIBLE);
         email_block.setVisibility(View.VISIBLE);
     }
-
-    void success_login() {
-
-    }
-
-    void success_registration() {
-
-    }
-
-    void unsuccess_login() {
-
-    }
-
-    void unsuccess_registration() {
-
-    }
-
 }
