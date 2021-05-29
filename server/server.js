@@ -5,10 +5,13 @@ app.use(express.json());
 const auth = require('./routes/auth');
 const admin = require('./routes/admin');
 const events = require('./routes/events');
+const passports = require('./routes/passports');
+
 
 app.use('/', auth.router);
 app.use('/', admin);
 app.use('/', events);
+app.use('/', passports);
 
 app.get('/', (req, res) => {
     console.log("hello");
