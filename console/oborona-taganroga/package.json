@@ -1,5 +1,5 @@
 {
-  "name": "vue-taganrog-oborona",
+  "name": "oborona-taganroga",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,19 +9,13 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.11.4",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.0-beta3",
     "core-js": "^3.6.5",
-    "google-map": "^1.1.0",
-    "google-maps-api-loader": "^1.1.1",
-    "googlemaps-vue3": "^2.0.4",
-    "use": "^3.1.1",
     "vue": "^3.0.0",
-    "vue-browser-geolocation": "^1.8.0",
-    "vue-router": "^3.5.1",
-    "yarn": "^1.22.10"
+    "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0"
   },
