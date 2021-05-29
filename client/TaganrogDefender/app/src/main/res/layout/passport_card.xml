@@ -1,44 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/book_card"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/passport_card"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="320dp"
     android:layout_marginStart="30dp"
     android:layout_marginLeft="30dp"
-    android:layout_marginTop="20dp"
     android:layout_marginEnd="30dp"
     android:layout_marginRight="30dp"
-    app:cardBackgroundColor="#FFC107"
+    app:cardBackgroundColor="#9FA8DA"
     app:cardCornerRadius="10dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/name_passport"
-            android:layout_width="match_parent"
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginTop="20dp"
+            android:text="Размер одежды"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <TextView
-            android:id="@+id/surname_passport"
-            android:layout_width="match_parent"
+            android:id="@+id/size_passport"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/VIP_passport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="VIP" />
+            android:text="size"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/is_rent_passport"
+            app:layout_constraintTop_toTopOf="@+id/textView9" />
 
         <TextView
             android:id="@+id/type_passport"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="type" />
-    </LinearLayout>
+            android:text="type"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/is_guest_passport"
+            app:layout_constraintTop_toTopOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/is_rent_passport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rent"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="@+id/type_passport"
+            app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/is_guest_passport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="guest"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintEnd_toEndOf="@+id/VIP_passport"
+            app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/name_passport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/VIP_passport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:text="VIP"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:text="VIP-статус"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_passport" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Тип участия"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Аренда\nкостюма"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Гость/\nУчастник"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

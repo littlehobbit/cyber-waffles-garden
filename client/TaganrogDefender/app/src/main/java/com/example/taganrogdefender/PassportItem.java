@@ -7,7 +7,9 @@ public class PassportItem {
     private String Name;
     private String Surname;
     private Boolean Is_VIP;
-    private Boolean Is_participant;
+    private Boolean Is_guest;
+    private Boolean IsRent;
+    private int ClothesSize;
     public enum type_of_participant {
         Sport,
         Reconstruction
@@ -15,12 +17,15 @@ public class PassportItem {
 
     private type_of_participant Type;
 
-    public PassportItem(String name, String surname, Boolean is_VIP, Boolean is_participant, type_of_participant type) {
+    public PassportItem(String name, String surname, Boolean is_VIP, Boolean is_guest,
+                        type_of_participant type, boolean isRent, int size) {
         Name = name;
         Surname = surname;
         Is_VIP = is_VIP;
-        Is_participant = is_participant;
+        Is_guest = is_guest;
         Type = type;
+        IsRent = isRent;
+        ClothesSize = size;
     }
 
     String get_name () {
@@ -35,9 +40,19 @@ public class PassportItem {
         return Is_VIP;
     }
 
-    Boolean get_is_participant () {
-        return Is_participant;
+    Boolean get_is_guest () {
+        return Is_guest;
     }
 
+    type_of_participant get_type () {
+        return Type;
+    }
 
+    Boolean get_is_rent () {
+        return IsRent;
+    }
+
+    int get_size () {
+        return ClothesSize;
+    }
 }

@@ -17,22 +17,18 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class request_real implements request_interface {
+public class RequestRealWithAuthorisationToken implements request_interface {
 
-    static public String token_access;
-    static public String refresh_token_access;
-
+    // Копипастик
     @Override
     public JSONObject POST(String url, String json) {
-
-
         OkHttpClient client = new OkHttpClient();
 
         RequestBody body = RequestBody.create(
                 MediaType.parse("application/json"), json);
 
         Request request = new Request.Builder()
-                .header("content-type", "application/json")
+                .header("Authorization", "hi " + request_real.token_access)
                 .url(url)
                 .post(body)
                 .build();
@@ -73,6 +69,7 @@ public class request_real implements request_interface {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
+                .header("Authorization", "hi " + request_real.token_access)
                 .url(url)
                 .build();
 
