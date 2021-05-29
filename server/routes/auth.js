@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const connection = require("../mysqlcon");
+const { query } = require('../mysqlcon');
 
 require("dotenv").config();
 
@@ -105,6 +106,15 @@ router.post('/login', (req, res) => {
                 console.log(e);
             }
         }
+    })
+})
+
+router.post('/logout', authenticateUser,(req, res) => {
+    let values = ["", req.user.id];
+    let query = "update users set TOKEN = ? where ID = ?";
+    connection.query(query, values, (err, result)=>{
+        if(err) res.sendStatus(500);
+        else res.sendStatus(200);
     })
 })
 
