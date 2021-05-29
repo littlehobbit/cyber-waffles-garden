@@ -1,11 +1,14 @@
 package com.example.taganrogdefender;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     Boolean have_passport = true;
     GoogleMap map;
 
+    CardView plug_passport;
+
     RecyclerView recyclerView;
 
     Handler handler;
@@ -52,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private PassportAdapter _adapter;
     private RecyclerView.LayoutManager _layoutManager;
 
-    private Intent _fileIntent;
     PassportArray passportArray = new PassportArray();
 
     request_real request = new request_real();
@@ -67,12 +71,18 @@ public class MainActivity extends AppCompatActivity {
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         recyclerView = findViewById(R.id.recyclerview_passports);
-
-
+        plug_passport = findViewById(R.id.plug_passport);
+        //
         passportArray.loadArray(this);
 
-        buildRecyclerView();
-
+        if(passportArray.getPassports().isEmpty()) {
+            plug_passport.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        } else {
+            plug_passport.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            buildRecyclerView();
+        }
 
         handler = new Handler();
         run_update_map = new Runnable() {
@@ -146,24 +156,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void buildRecyclerView()
     {
-        recyclerView = findViewById(R.id.recyclerview_passports);
+        recyclerView = findViewById(R.id.recycleview_passports);
         recyclerView.setHasFixedSize(true);
-        _layoutManager = new LinearLayoutManager(MainActivity.this);
+        _layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         _adapter = new PassportAdapter(passportArray.getPassports());
+
+        SnapHelper helper = new LinearSnapHelper();
+        helper.attachToRecyclerView(recyclerView);
 
         recyclerView.setLayoutManager(_layoutManager);
         recyclerView.setAdapter(_adapter);
-
-        passportArray.add_new_passport("pu", "pu", true, true, PassportItem.type_of_participant.Reconstruction);
-        _adapter.notifyDataSetChanged();
 
         _adapter.setOnItemClickListener(new PassportAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Toast.makeText(MainActivity.this, "Вы нажали на билеты, молодец", Toast.LENGTH_SHORT).show();
-
             }
-
         });
     }
 
@@ -172,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         try {
             handler.removeCallbacks(run_update_map);
+            handler.removeCallbacks(run_refresh);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         try {
             handler.postDelayed(run_update_map, 0);
+            handler.postDelayed(run_refresh, 0);
         } catch (Exception e) {
             e.printStackTrace();
         }

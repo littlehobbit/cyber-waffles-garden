@@ -3,7 +3,6 @@ package com.example.taganrogdefender;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,17 +32,21 @@ public class PassportAdapter extends RecyclerView.Adapter<PassportAdapter.ItemVi
     public static class ItemViewHolder extends RecyclerView.ViewHolder
     {
         public TextView name;
-        public TextView surname;
         public TextView is_vip;
-        public TextView is_participant;
+        public TextView is_guest;
+        public TextView is_rent;
+        public TextView size;
+        public TextView type;
 
         public ItemViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             name = itemView.findViewById(R.id.name_passport);
-            surname = itemView.findViewById(R.id.surname_passport);
             is_vip = itemView.findViewById(R.id.VIP_passport);
-            is_participant = itemView.findViewById(R.id.type_passport);
+            is_guest = itemView.findViewById(R.id.is_guest_passport);
+            is_rent = itemView.findViewById(R.id.is_rent_passport);
+            size = itemView.findViewById(R.id.size_passport);
+            type = itemView.findViewById(R.id.type_passport);
 
             View item = itemView.findViewById(R.id.passport_card);
             if (item == null) return;
@@ -73,10 +76,41 @@ public class PassportAdapter extends RecyclerView.Adapter<PassportAdapter.ItemVi
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         PassportItem currentItem = _list.get(position);
 
-        holder.name.setText(currentItem.get_name());
-        holder.surname.setText(currentItem.get_surname());
-        holder.is_vip.setText(currentItem.get_is_VIP().toString());
-        holder.is_participant.setText(currentItem.get_is_participant().toString());
+        holder.name.setText(currentItem.get_name() + " " + currentItem.get_surname());
+
+        if(currentItem.get_is_VIP())
+        {
+            holder.is_vip.setText("да");
+        }
+        else {
+            holder.is_vip.setText("нет");
+        }
+
+        if(currentItem.get_is_guest())
+        {
+            holder.is_guest.setText("Гость");
+            holder.type.setText("Отсутствует");
+        }
+        else {
+            holder.is_guest.setText("Участник");
+            if(currentItem.get_type() == PassportItem.type_of_participant.Sport)
+            {
+                holder.type.setText("Спорт");
+            }
+            if (currentItem.get_type() == PassportItem.type_of_participant.Reconstruction){
+                holder.type.setText("Реконструктор");
+            }
+
+        }
+
+        if(currentItem.get_is_rent()) {
+            holder.is_rent.setText("да");
+            holder.size.setText(String.valueOf(currentItem.get_size()));
+
+        } else {
+            holder.is_rent.setText("нет");
+            holder.size.setText("-");
+        }
     }
 
     @Override
