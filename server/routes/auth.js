@@ -51,21 +51,17 @@ router.post('/refresh', (req, res) => {
         let values = [req.body.token];
         let query = "select ID from users where TOKEN = ?"
         connection.query(query, values, (err, result)=>{
-                if(err) res.sendStatus(500);
-                if(result[0] == undefined) res.sendStatus(401);
+                if(err) return res.sendStatus(500);
+                console.log("token =" + req.body.token);
+                if(result[0] == undefined) return res.sendStatus(401);
                 jwt.verify(values[0], process.env.REFRESH_TOKEN_SECRET, (err, user)=>{
                     if(err){
-                        console.log(err);
                         return res.sendStatus(403);
                     }
                     else{
                         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"15m"});
-                        let values = [accessToken, result[0]["ID"]];
-                        let query = "update users set TOKEN = ? where ID = ?"
-                        connection.query(query, values, (err, result)=>{
-                            if(err) res.sendStatus(500);
-                            else res.json( {accesstoken : accessToken} ).status(200).send();
-                    })}
+                        res.json( {accesstoken : accessToken} ).status(200).send();
+                    }
             })
         })
 })
