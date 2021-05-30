@@ -123,7 +123,13 @@
             },
 
             AddInfo(){
-                axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(response => (this.tuta = response.data.bpi))
+                axios.get('https://192.168.43.222:3000/bonuses/all').then(response => (this.tuta = response)).catch(error => console.log(error));
+
+                for(let i=0; i<this.mmarkers;i++)
+                {
+                    console.log(this.mmarkers[i])
+                }
+                 console.log(this.tuta)
             }
         }
     }
@@ -146,6 +152,7 @@
         <div>
             <button @click="AddInfo">Add Injormation</button>
         </div>
+        {{tuta}}
     </div>
     <div id="map" style="width: 70%; height: 80vh" />
 
