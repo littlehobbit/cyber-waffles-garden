@@ -28,7 +28,7 @@ router.post('/admin/event', auth,  (req, res) => {
     console.log(query);
     connection.query(query, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-        else res.status(201).setHeader("Access-Control-Allow-Origin", "*").send(JSON.stringify(result.insertId));
+        else res.status(201).send(JSON.stringify(result.insertId));
     })
 })
 
@@ -41,7 +41,7 @@ router.delete('/admin/event', auth,  (req, res) => {
              res.sendStatus(500);
             console.log(err);
         }
-        else res.setHeader("Access-Control-Allow-Origin", "*").sendStatus(202);
+        else res.sendStatus(202);
     })
 })
 
@@ -76,7 +76,7 @@ router.put('/admin/event', auth, (req, res)=>{
             console.log(err);
             res.sendStatus(400);
         }
-        else res.setHeader("Access-Control-Allow-Origin", "*").sendStatus(202);
+        else res.sendStatus(202);
     })
 })
 
@@ -90,7 +90,7 @@ router.post('/admin/bonus', auth,  (req, res) => {
     console.log(query);
     connection.query(query, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-        else res.status(201).setHeader("Access-Control-Allow-Origin", "*").send(JSON.stringify(result.insertId));
+        else res.status(201).send(JSON.stringify(result.insertId));
     })
 })
 
@@ -103,7 +103,7 @@ router.delete('/admin/bonus', auth,  (req, res) => {
              res.sendStatus(500);
             console.log(err);
         }
-        else res.setHeader("Access-Control-Allow-Origin", "*").sendStatus(202);
+        else res.sendStatus(202);
     })
 })
 
@@ -134,7 +134,7 @@ router.put('/admin/bonus', auth, (req, res)=>{
             console.log(err);
             res.sendStatus(400);
         }
-        else res.setHeader("Access-Control-Allow-Origin", "*").sendStatus(202);
+        else res.sendStatus(202);
     })
 })
 

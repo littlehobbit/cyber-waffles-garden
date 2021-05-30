@@ -12,7 +12,7 @@ router.get('/bonuses/all', (req, res) =>{
     connection.query(query, (err, result, field) => {
         console.log(err);
         if (err) res.status(404).send('Database error');
-        res.status(200).setHeader("Access-Control-Allow-Origin", "*").json({res : result});
+        res.status(200).json({res : result});
     })
 })
 
@@ -25,7 +25,7 @@ router.get('/bonuses/details/:id', (req, res) => {
     connection.query(query, (err, result, field) => {
         console.log(err)
         if (err) res.status(404).send('Database error');
-        if (result) res.status(200).setHeader("Access-Control-Allow-Origin", "*").send(result);
+        if (result) res.status(200).send(result);
         else res.status(404).send('Not found');
     })
 })

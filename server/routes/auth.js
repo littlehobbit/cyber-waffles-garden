@@ -42,7 +42,7 @@ router.post('/registration', async (req, res) => {
                     res.sendStatus(500);
                     console.log(err);
                 }
-                else res.setHeader("Access-Control-Allow-Origin", "*").sendStatus(201);
+                else res.sendStatus(201);
             })
         }
     })
@@ -61,7 +61,7 @@ router.post('/refresh', (req, res) => {
                     }
                     else{
                         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"15m"});
-                        return res.status(200).setHeader("Access-Control-Allow-Origin", "*").json( {accesstoken : accessToken} );
+                        return res.status(200).json( {accesstoken : accessToken} );
                     }
             })
         })
@@ -89,7 +89,7 @@ router.post('/login', (req, res) => {
                     let query = "update users set TOKEN = ? where ID = ?"
                     connection.query(query, values, (err, result)=>{
                         if(err) res.sendStatus(500);
-                        res.setHeader("Access-Control-Allow-Origin", "*").json({accesstoken:accessToken, refreshtoken:refreshToken}).status(200);
+                        res.json({accesstoken:accessToken, refreshtoken:refreshToken}).status(200);
                     })
                 }
                 else {
@@ -110,13 +110,13 @@ router.post('/logout', authenticateUser,(req, res) => {
     let query = "update users set TOKEN = ? where ID = ?";
     connection.query(query, values, (err, result)=>{
         if(err) res.sendStatus(500);
-        else res.setHeader("Access-Control-Allow-Origin", "*").sendStatus(200);
+        else res.sendStatus(200);
     })
 })
 
 router.get("/test", authenticateUser, (req,res)=>{
     console.log("work");
-    res.setHeader("Access-Control-Allow-Origin", "*").sendStatus(200);
+    res.sendStatus(200);
 })
 
 async function authenticateUser(req, res, next){
