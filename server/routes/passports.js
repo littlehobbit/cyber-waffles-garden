@@ -6,7 +6,7 @@ const connection = require('../mysqlcon');
 const e = require('express');
 
 router.get('/passports', auth, (req, res) => {
-    var query = `SELECT ID, FIRSTNAME, SECONDNAME, ISVIP, ISGUEST FROM pasports WHERE USERID=${req.user.id}`
+    var query = `SELECT ID, FIRSTNAME, SECONDNAME, ISVIP, ISGUEST, PARTTYPE, ISRENT, SIZE FROM pasports WHERE USERID=${req.user.id}`
     connection.query(query, (err, result, field) => {
         if (err) res.status(404).send('Database error');
         else res.status(200).setHeader("Access-Control-Allow-Origin", "*").send(result);
