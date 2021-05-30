@@ -3,17 +3,17 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const connection = require("../mysqlcon");
-const { query } = require('../mysqlcon');
 
 require("dotenv").config();
 
 var users = []; 
 
 router.post('/registration', async (req, res) => {
+    console.log(req.body.password);
     var  hashedPassword;
     try{
         var round = parseInt(process.env.HASH_ROUNDS);
-        hashedPassword = await bcrypt.hash(req.body.password, round);
+        hashedPassword = await bcrypt.hash(req.body.password, 10);
     }
     catch(e){
         console.error(e);
@@ -26,7 +26,8 @@ router.post('/registration', async (req, res) => {
         phone: req.body.phone
     }
     const vars = [curuser.email]
-    let query = "select ID from users where MAIL = ?";
+    console.log('here');
+    let query = "select ID from users where MAIL=?";
     connection.query(query, vars, (err, result)=>{
         if(err){
             res.sendStatus(500);
@@ -138,4 +139,5 @@ async function authenticateUser(req, res, next){
 }
 
 module.exports.authenticateUser = authenticateUser;
+
 module.exports.router = router;
