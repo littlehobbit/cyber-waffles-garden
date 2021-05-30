@@ -2,54 +2,49 @@ package com.example.taganrogdefender;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.example.taganrogdefender.ui.map.MapActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     String server_ip = "192.168.43.143:3000";
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     Boolean have_passport = true;
     GoogleMap map;
 
+    ImageView transparentImageView;
+    ScrollView scroll;
 
     CardView buy_passport_card;
     CardView plug_passport;
+    CardView bonuses;
+    CardView history;
 
     RecyclerView recyclerView;
 
@@ -61,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager _layoutManager;
 
     PassportArray passportArray = new PassportArray();
-
     request_real request = new request_real();
 
     @Override
@@ -76,8 +70,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview_passports);
         plug_passport = findViewById(R.id.plug_passport);
         buy_passport_card = findViewById(R.id.buy_passport_card);
-        //
+        bonuses = findViewById(R.id.bonuses);
+        history = findViewById(R.id.history);
+
+        transparentImageView = findViewById(R.id.transparent_image);
+        scroll = findViewById(R.id.scroll);
         passportArray.loadArray(this);
+
 
         if(passportArray.getPassports().isEmpty()) {
             plug_passport.setVisibility(View.VISIBLE);
@@ -107,10 +106,51 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(run_refresh, 600000);
 
 
+        transparentImageView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disable touch on transparent view
+                        return false;
+
+                    case MotionEvent.ACTION_UP:
+                        scroll.requestDisallowInterceptTouchEvent(false);
+                        return true;
+
+                    case MotionEvent.ACTION_MOVE:
+                        scroll.requestDisallowInterceptTouchEvent(true);
+                        return false;
+
+                    default:
+                        return true;
+            }
+
+            }
+        });
+
+        bonuses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+            }
+        });
+
         buy_passport_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
+            }
+        });
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, History.class);
+                startActivity(intent);
             }
         });
     }
@@ -159,11 +199,16 @@ public class MainActivity extends AppCompatActivity {
                         double y = array.getJSONObject(i).getJSONObject("EVENT_PLACE").getDouble("y");
                         String name_event = array.getJSONObject(i).getString("EVENT_NAME");
                         int ID = array.getJSONObject(i).getInt("ID");
-                        latLng = new LatLng(x, y);
-                        marker = new MarkerOptions()
-                                .position(latLng)
-                                .title(name_event);
-                        googleMap.addMarker(marker);
+                        int PLACE_TYPE = array.getJSONObject(i).getInt("PLACE_TYPE");
+                        String PLACE_GROUP = array.getJSONObject(i).getString("PLACE_GROUP");
+                        if(PLACE_TYPE == 1)
+                        {
+                            latLng = new LatLng(x, y);
+                            marker = new MarkerOptions()
+                                    .position(latLng)
+                                    .title(name_event);
+                            googleMap.addMarker(marker);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -174,8 +219,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateRecyclerView() {
-        passportArray.loadArray(MainActivity.this);
-        _adapter.notifyDataSetChanged();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            public void run() {
+                passportArray.loadArray(MainActivity.this);
+                _adapter = new PassportAdapter(passportArray.getPassports());
+                recyclerView.setAdapter(_adapter);
+                _adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     public void buildRecyclerView() {

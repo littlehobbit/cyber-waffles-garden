@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TaganrogDefender</string>
+    <string name="app_name">Оборона Таганрога</string>
     <string name="title_activity_log_reg">log_reg</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
@@ -17,5 +17,12 @@
     <string-array name="type">
         <item>Спорт</item>
         <item>Реконструкция</item>
+    </string-array>
+
+    <string-array name="map_filter">
+        <item>Все</item>
+        <item>Кафе</item>
+        <item>Сувениры</item>
+        <item>Отели</item>
     </string-array>
 </resources>

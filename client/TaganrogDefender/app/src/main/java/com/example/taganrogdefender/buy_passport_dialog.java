@@ -50,6 +50,7 @@ public class buy_passport_dialog extends AppCompatDialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.popup_new_passport, null);
+        view.setBackgroundResource(android.R.color.transparent);
 
         spinner_is_guest = view.findViewById(R.id.spinner_is_guest);
         spinner_type = view.findViewById(R.id.spinner_type);

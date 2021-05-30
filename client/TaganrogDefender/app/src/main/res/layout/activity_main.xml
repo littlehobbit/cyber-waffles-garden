@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +73,7 @@
                 android:layout_marginRight="30dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusableInTouchMode="false"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#90CAF9"
                 app:cardCornerRadius="10dp"
@@ -145,7 +146,7 @@
                     android:layout_weight="6"
                     android:clickable="true"
                     android:focusable="true"
-                    android:focusableInTouchMode="true"
+                    android:focusableInTouchMode="false"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#90CAF9"
                     app:cardCornerRadius="10dp">
@@ -180,7 +181,7 @@
                     android:layout_weight="6"
                     android:clickable="true"
                     android:focusable="true"
-                    android:focusableInTouchMode="true"
+                    android:focusableInTouchMode="false"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#90CAF9"
                     app:cardCornerRadius="10dp">
@@ -217,6 +218,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 app:layout_constraintVertical_bias="1.0" />
 
+            <ImageView
+                android:id="@+id/transparent_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="@+id/map"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/map"
+                app:srcCompat="@android:color/transparent"
+                tools:srcCompat="@android:color/transparent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
