@@ -73,7 +73,7 @@
                 android:layout_marginRight="30dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:focusableInTouchMode="false"
+                android:focusableInTouchMode="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#90CAF9"
                 app:cardCornerRadius="10dp"
@@ -146,7 +146,7 @@
                     android:layout_weight="6"
                     android:clickable="true"
                     android:focusable="true"
-                    android:focusableInTouchMode="false"
+                    android:focusableInTouchMode="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#90CAF9"
                     app:cardCornerRadius="10dp">
@@ -181,7 +181,7 @@
                     android:layout_weight="6"
                     android:clickable="true"
                     android:focusable="true"
-                    android:focusableInTouchMode="false"
+                    android:focusableInTouchMode="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#90CAF9"
                     app:cardCornerRadius="10dp">

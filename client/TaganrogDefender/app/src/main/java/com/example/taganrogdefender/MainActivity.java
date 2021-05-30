@@ -1,5 +1,6 @@
 package com.example.taganrogdefender;
 
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -183,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMapReady(GoogleMap googleMap) {
 
+                googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MainActivity.this));
                 LatLng latLng = new LatLng(47.22, 38.76);
                 MarkerOptions marker = new MarkerOptions()
                         .position(latLng)
@@ -201,12 +204,17 @@ public class MainActivity extends AppCompatActivity {
                         int ID = array.getJSONObject(i).getInt("ID");
                         int PLACE_TYPE = array.getJSONObject(i).getInt("PLACE_TYPE");
                         String PLACE_GROUP = array.getJSONObject(i).getString("PLACE_GROUP");
+                        String EVENT_DESCRIPTION = array.getJSONObject(i).getString("EVENT_DESCRIPTION");
+                        String EVENT_DATETIME = array.getJSONObject(i).getString("EVENT_DATETIME");
+                        EVENT_DATETIME = EVENT_DATETIME.substring(0, EVENT_DATETIME.length() - 5);
+                        EVENT_DATETIME.replace("T"," ");
                         if(PLACE_TYPE == 1)
                         {
                             latLng = new LatLng(x, y);
                             marker = new MarkerOptions()
                                     .position(latLng)
-                                    .title(name_event);
+                                    .title(name_event)
+                                    .snippet(EVENT_DESCRIPTION + "\n" + EVENT_DATETIME);
                             googleMap.addMarker(marker);
                         }
                     }
@@ -217,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    
+    
     public void updateRecyclerView() {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {

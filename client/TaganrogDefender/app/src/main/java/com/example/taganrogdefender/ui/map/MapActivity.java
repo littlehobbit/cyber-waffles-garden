@@ -1,7 +1,12 @@
 package com.example.taganrogdefender.ui.map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -10,12 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.taganrogdefender.CustomInfoWindowAdapter;
+import com.example.taganrogdefender.MainActivity;
 import com.example.taganrogdefender.R;
 import com.example.taganrogdefender.request_real;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -60,6 +69,7 @@ public class MapActivity extends AppCompatActivity {
                  } else if (i == 3) {
                      filter = "отели";
                  }
+                 UpdateMap();
              }
 
              @Override
@@ -82,7 +92,7 @@ public class MapActivity extends AppCompatActivity {
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-
+                googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapActivity.this));
                 LatLng latLng = new LatLng(47.22, 38.76);
                 MarkerOptions marker = new MarkerOptions()
                         .position(latLng)
@@ -91,7 +101,7 @@ public class MapActivity extends AppCompatActivity {
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
 
                 JSONObject json = request.GET("http://"+ server_ip + "/events/all");
-
+                googleMap.clear();
                 try {
                     JSONArray array = json.getJSONArray("res");
                     for (int i = 0; i < array.length(); i++) {
@@ -101,21 +111,45 @@ public class MapActivity extends AppCompatActivity {
                         int ID = array.getJSONObject(i).getInt("ID");
                         int PLACE_TYPE = array.getJSONObject(i).getInt("PLACE_TYPE");
                         String PLACE_GROUP = array.getJSONObject(i).getString("PLACE_GROUP");
-                        if((PLACE_TYPE == 0 && filter.equals(PLACE_GROUP.toLowerCase()))|| (filter.equals("all") && PLACE_TYPE == 0))
+                        String EVENT_DESCRIPTION = array.getJSONObject(i).getString("EVENT_DESCRIPTION");
+                        String EVENT_DATETIME = array.getJSONObject(i).getString("EVENT_DATETIME");
+                        EVENT_DATETIME = EVENT_DATETIME.substring(0, EVENT_DATETIME.length() - 5);
+                        EVENT_DATETIME.replace("T"," ");
+                        if (PLACE_TYPE == 0 && (filter.equals(PLACE_GROUP.toLowerCase())|| filter.equals("все")))
                         {
                             latLng = new LatLng(x, y);
                             marker = new MarkerOptions()
                                     .position(latLng)
-                                    .title(name_event);
+                                    .title(name_event)
+                                    .snippet(EVENT_DESCRIPTION + "\n" + EVENT_DATETIME);
+                            if(PLACE_GROUP.toLowerCase().equals("кафе"))
+                            {
+                                marker.icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_baseline_local_cafe_24));
+                            }
+                            if(PLACE_GROUP.toLowerCase().equals("отели"))
+                            {
+                                marker.icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_baseline_hotel_24));
+                            }
+                            if(PLACE_GROUP.toLowerCase().equals("сувениры"))
+                            {
+                                marker.icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_baseline_stars_24));
+                            }
                             googleMap.addMarker(marker);
                         }
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResTd) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context,vectorResTd);
+        vectorDrawable.setBounds(0,0,vectorDrawable.getIntrinsicWidth(),vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas=new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }
