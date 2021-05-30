@@ -14,7 +14,7 @@ router.get('/events/near', (req, res) => {
         console.log(err);
         if (err) res.status(404).send('Database error');
 
-        res.status(200).json({res : result}).send();
+        res.status(200).setHeader("Access-Control-Allow-Origin", "*").json({res : result});
     })
 })
 
@@ -25,9 +25,11 @@ router.get('/events/all', (req, res) => {
 
     connection.query(query, (err, result, field) => {
         console.log(err);
-        if (err) res.status(404).send('Database error');
-
-        res.status(200).json({res : result}).send();
+        if (err) {
+            res.status(404).send('Database error');
+            return;
+        }
+        res.status(200).setHeader("Access-Control-Allow-Origin", "*").json({res : result});
     })
 })
 
@@ -39,7 +41,7 @@ router.get('/events/details/:id', (req, res) => {
 
     connection.query(query, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-        if (result[0]) res.status(200).send(result[0]);
+        if (result[0]) res.status(200).setHeader("Access-Control-Allow-Origin", "*").send(result[0]);
         else res.status(404).send('Not found');
     })
 })

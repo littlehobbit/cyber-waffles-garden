@@ -9,7 +9,7 @@ router.get('/passports', auth, (req, res) => {
     var query = `SELECT ID, FIRSTNAME, SECONDNAME, ISVIP, ISGUEST FROM pasports WHERE USERID=${req.user.id}`
     connection.query(query, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-        else res.status(200).send(result);
+        else res.status(200).setHeader("Access-Control-Allow-Origin", "*").send(result);
     })
 })
 
@@ -23,7 +23,7 @@ router.post('/passports', auth, (req, res) => {
     `
     connection.query(query, datas, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-        else res.status(200).send(JSON.stringify(result.insertId));
+        else res.status(200).setHeader("Access-Control-Allow-Origin", "*").send(JSON.stringify(result.insertId));
     })
 })
 
@@ -31,7 +31,7 @@ router.delete('/passports', auth, (req, res) => {
     var query = `DELETE FROM pasports WHERE ID=${req.body.id}`;
     connection.query(query, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-        else res.status(200).send();
+        else res.status(200).setHeader("Access-Control-Allow-Origin", "*").send();
     })
 });
 

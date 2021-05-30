@@ -139,7 +139,7 @@ GET http://localhost:3000
 
 ###
 
-POST http://192.168.43.124:3000/login 
+POST http://localhost:3000/login 
 content-type: application/json
 
 {

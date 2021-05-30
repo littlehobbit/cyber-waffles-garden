@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+
 const auth = require('./routes/auth');
 const admin = require('./routes/admin');
 const events = require('./routes/events');
