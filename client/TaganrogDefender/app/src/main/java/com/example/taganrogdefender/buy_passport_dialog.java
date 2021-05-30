@@ -3,7 +3,6 @@ package com.example.taganrogdefender;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +16,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
+
+import static java.lang.Integer.parseInt;
+
 public class buy_passport_dialog extends AppCompatDialogFragment {
+    private static WeakReference<MainActivity> activityRef;
+
+    public void setActivity(MainActivity activity) {
+        activityRef = new WeakReference<>(activity);
+    }
 
     Spinner spinner_is_guest;
     Spinner spinner_type;
@@ -109,7 +120,34 @@ public class buy_passport_dialog extends AppCompatDialogFragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RequestRealWithAuthorisationToken request = new RequestRealWithAuthorisationToken();
+                JSONObject jsomReq = new JSONObject();
 
+                try {
+                    jsomReq.put("firstname", name.getText().toString());
+                    jsomReq.put("secondname", surname.getText().toString());
+                    jsomReq.put("isvip", (spinner_vip.getSelectedItemId() == 0 ? 1 : 0));
+                    jsomReq.put("isguest", (spinner_is_guest.getSelectedItemId() == 0 ? 1 : 0));
+
+                    if (spinner_is_guest.getSelectedItemId() == 0) {
+                        jsomReq.put("parttype", null);
+                    } else {
+                        jsomReq.put("parttype", spinner_type.getSelectedItem().toString());
+                    }
+                    jsomReq.put("isrent", (spinner_rent.getSelectedItemId() == 0 ? 1 : 0));
+                    if (spinner_rent.getSelectedItemId() == 0)
+                        jsomReq.put("size", (int)parseInt(size.getText().toString()));
+                    else
+                        jsomReq.put("size", 0);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONObject ans = request.POST("http://" + LogIn.server_ip + "/passports", jsomReq.toString());
+                // Обработка ошибочной ситуации
+                activityRef.get().updateRecyclerView(); // я смотрел как передать активити...
             }
         });
 

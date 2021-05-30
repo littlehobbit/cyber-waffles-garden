@@ -16,33 +16,29 @@ public class PassportArray extends Application {
 
     public void loadArray(Context context)
     {
-        // passports =  null; // переделать
-        if (passports == null)
-        {
-            JSONObject json = request.GET("http://"+ LogIn.server_ip + "/passports");
-            try {
-                passports = new ArrayList<>();
-                JSONArray jsonPassports = json.getJSONArray("res");
-                for (int i = 0; i < jsonPassports.length(); i++) {
-                    JSONObject total = jsonPassports.getJSONObject(i);
-                    String name = total.getString("FIRSTNAME");
-                    String surname = total.getString("SECONDNAME");
-                    boolean isVip = total.getInt("ISVIP") != 0;
-                    boolean isGuest = total.getInt("ISGUEST") != 0;
-                    String part = total.getString("PARTTYPE");
-                    PassportItem.type_of_participant type;
-                    if (part.equals(PassportItem.type_of_participant.Sport.toString())) {
-                        type = PassportItem.type_of_participant.Sport;
-                    } else {
-                        type = PassportItem.type_of_participant.Reconstruction;
-                    }
-                    boolean isRent = total.getInt("ISRENT") != 0;
-                    int size = total.getInt("SIZE");
-                    passports.add(new PassportItem(name, surname, isVip, isGuest, type, isRent, size));
+        passports = new ArrayList<>(); // мб из-за этого?
+        JSONObject json = request.GET("http://"+ LogIn.server_ip + "/passports");
+        try {
+            JSONArray jsonPassports = json.getJSONArray("res");
+            for (int i = 0; i < jsonPassports.length(); i++) {
+                JSONObject total = jsonPassports.getJSONObject(i);
+                String name = total.getString("FIRSTNAME");
+                String surname = total.getString("SECONDNAME");
+                boolean isVip = total.getInt("ISVIP") != 0;
+                boolean isGuest = total.getInt("ISGUEST") != 0;
+                String part = total.getString("PARTTYPE");
+                PassportItem.type_of_participant type;
+                if (part.equals(PassportItem.type_of_participant.Sport.toString())) {
+                    type = PassportItem.type_of_participant.Sport;
+                } else {
+                    type = PassportItem.type_of_participant.Reconstruction;
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                boolean isRent = total.getInt("ISRENT") != 0;
+                int size = total.getInt("SIZE");
+                passports.add(new PassportItem(name, surname, isVip, isGuest, type, isRent, size));
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

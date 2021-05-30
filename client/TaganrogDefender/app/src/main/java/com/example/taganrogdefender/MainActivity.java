@@ -36,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -116,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void openDialog() {
         buy_passport_dialog dialog = new buy_passport_dialog();
+        dialog.setActivity(this);
+
         dialog.show(getSupportFragmentManager(), "buy_passport_dialog");
     }
 
@@ -168,6 +171,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void updateRecyclerView() {
+        passportArray.loadArray(MainActivity.this);
+        _adapter.notifyDataSetChanged();
     }
 
     public void buildRecyclerView() {
