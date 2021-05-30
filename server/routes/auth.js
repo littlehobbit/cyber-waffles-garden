@@ -61,7 +61,7 @@ router.post('/refresh', (req, res) => {
                     }
                     else{
                         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"15m"});
-                        res.json( {accesstoken : accessToken} ).status(200).setHeader("Access-Control-Allow-Origin", "*");
+                        return res.status(200).setHeader("Access-Control-Allow-Origin", "*").json( {accesstoken : accessToken} );
                     }
             })
         })

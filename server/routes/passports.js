@@ -11,21 +11,21 @@ router.get('/passports', auth, (req, res) => {
         console.log(err);
         console.log(result);
         if (err) res.status(404).send('Database error');
-        else res.status(200).setHeader("Access-Control-Allow-Origin", "*").send(result);
+        else return res.status(200).setHeader("Access-Control-Allow-Origin", "*").json({res:result});
     })
 })
 
 router.post('/passports', auth, (req, res) => {
-    var datas = [req.body.buytime, req.body.firstname, req.body.secondname, 
+    var datas = [req.body.firstname, req.body.secondname, 
                 req.body.isvip, req.body.isguest, req.body.parttype, req.body.size];
     var query = `
     INSERT INTO pasports 
     (USERID, BUYTIME, FIRSTNAME, SECONDNAME, ISVIP, ISGUEST, PARTTYPE, SIZE)
-    VALUES (${req.user.id}, ?, ?, ?, ?, ?, ?, ?);
+    VALUES (${req.user.id}, NOW(), ?, ?, ?, ?, ?, ?);
     `
     connection.query(query, datas, (err, result, field) => {
         if (err) res.status(404).send('Database error');
-        else res.status(200).setHeader("Access-Control-Allow-Origin", "*").send(JSON.stringify(result.insertId));
+        else return res.status(200).setHeader("Access-Control-Allow-Origin", "*").json(result.insertId);
     })
 })
 
