@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     Boolean have_passport = true;
     GoogleMap map;
 
+
+    CardView buy_passport_card;
     CardView plug_passport;
 
     RecyclerView recyclerView;
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview_passports);
         plug_passport = findViewById(R.id.plug_passport);
+        buy_passport_card = findViewById(R.id.buy_passport_card);
         //
         passportArray.loadArray(this);
 
@@ -101,6 +104,19 @@ public class MainActivity extends AppCompatActivity {
 
         handler.postDelayed(run_update_map, 0);
         handler.postDelayed(run_refresh, 600000);
+
+
+        buy_passport_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+    }
+
+    private void openDialog() {
+        buy_passport_dialog dialog = new buy_passport_dialog();
+        dialog.show(getSupportFragmentManager(), "buy_passport_dialog");
     }
 
     private void Refresh() {
@@ -154,9 +170,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void buildRecyclerView()
-    {
-        recyclerView = findViewById(R.id.recycleview_passports);
+    public void buildRecyclerView() {
+        recyclerView = findViewById(R.id.recyclerview_passports);
         recyclerView.setHasFixedSize(true);
         _layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         _adapter = new PassportAdapter(passportArray.getPassports());

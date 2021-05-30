@@ -3,4 +3,19 @@
     <string name="title_activity_log_reg">log_reg</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+    <string-array name="is_guest">
+        <item>Гость</item>
+        <item>Участник</item>
+    </string-array>
+
+    <string-array name="yes_no">
+        <item>Да</item>
+        <item>Нет</item>
+    </string-array>
+
+    <string-array name="type">
+        <item>Спорт</item>
+        <item>Реконструкция</item>
+    </string-array>
 </resources>
